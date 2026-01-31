@@ -3,8 +3,23 @@ const app = express();
 app.use(express.json());
 
 const cors = require('cors')
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5000',
+  'https://backend-ruddy-tau-36.vercel.app',
+  // Add your frontend Vercel URL here when you have it
+  // 'https://your-frontend.vercel.app'
+];
+
 app.use(cors({
-  origin: '*',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
