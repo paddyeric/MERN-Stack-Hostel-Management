@@ -1,0 +1,11 @@
+# Netlify config for MERN Hostel Management (client SPA)
+[build]
+  base = "client"
+  command = "npm run build"
+  publish = "build"
+
+# SPA: serve index.html for all routes so React Router handles /login, /register, etc.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
